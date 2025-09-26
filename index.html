@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <body style="background-color:#000068;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dad Joke Generator</title>
+    <style>
+        body {
+            font-family: Arial, serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        #jokeContainer {
+            background-color: #FDFBD4;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+            text-align: center;
+        }
+        #jokeDisplay {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            min-height: 50px; /* Ensures space even when empty */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="jokeContainer">
+        <h1>Corny Joke Kasi bakit hindi</h1>
+        <p id="jokeDisplay">Clickk</p>
+        <button onclick="getNewJoke()">Click</button>
+    </div>
+
+    <script>
+    const jokes = [
+        "Anong tawag sa isdang marunong mag-computer? Edi “fish-ermen”! ",
+        "Bakit laging malamig ang math book? Kasi marami siyang “problems.”",
+        "Anong hayop ang mahilig sa kape? Edi “kapeng isda.”",
+        "Ano ang plural ng manok? Chickenjoy!",
+        "Anong sabi ng 0 sa 8? “Uy, nice belt!”",
+        "Bakit hindi nag-aaway ang keyboard? Kasi may “space.”",
+        "Anong isda ang mahilig sa selfie? “Selfish.”",
+        "Ano ang tawag sa maliit na notebook? Notebabe.",
+        "Anong gulay ang mahilig sa party? Sayote!",
+        "Ano ang tawag sa kwadradong prutas? “Box-mango.”",
+        "Bakit may kandila sa birthday? Para may “light” ang buhay.",
+        "Anong tawag sa tumatawang isda? “Hali-hali-hali-but.”",
+        "Bakit hindi naliligaw ang pusa? Kasi may “meow-ps.”",
+        "Anong sapatos ang mahilig sa tulog? Adida-zZz.",
+        "Ano ang tawag sa biscuit na marunong sumayaw? “Biscuit-it.”",
+        "Bakit mahilig ang bag sa school? Kasi “class-mate” siya.",
+        "Anong hayop ang hindi marunong mag-drive? Edi, “carabao.”",
+        "Ano ang tawag sa maingay na gulay? Talong-talong!",
+        "Anong hayop ang mahilig sa cellphone? Edi, “cell-fish.”",
+        "Ano ang tawag sa sinigang na mahilig mag-aral? “Sinigang-graduate.”",
+        "Anong ibon ang mahilig sa kuryente? Edi, “watt-watt.”",
+        "Anong tawag sa tsinelas na malakas kumain? Slippers-eating.",
+        "Bakit laging kalmado ang dagat? Kasi marunong siyang “wave.”",
+        "Anong gulay ang mahilig sa internet? Sitaw-tify.",
+        "Ano ang tawag sa aso na mahilig sa kwento? Asong-tao.",
+        "Bakit hindi puwedeng maging singer ang payong? Kasi laging flat.",
+        "Anong hayop ang mahilig sa science? Lab-rador.",
+        "Ano ang tawag sa uod na mahilig mag-text? Uod-phone.",
+        "Bakit laging gutom ang ilaw? Kasi lagi siyang “on.”",
+        "Anong prutas ang mahilig sa exam? Papaya-per.",
+        "Bakit hindi nagugulat ang kalendaryo? Kasi alam niya ang “date.”",
+        "Ano ang tawag sa mainit na ice cream? Melt-in.",
+        "Bakit hindi naliligaw ang lapis? Kasi may “point.”",
+        "Ano ang tawag sa posporo na magaling mag-speech? Match-talaga.",
+        "Anong hayop ang mahilig sa guitar? Edi, “strum-bull.”",
+        "Ano ang tawag sa manggang mahilig sumayaw? Mango-ling.",
+        "Anong gulay ang marunong mag-math? Okra-tions.",
+        "Ano ang tawag sa taong mahilig sa kape pero tamad? Kape-tamad.",
+        "Bakit laging malungkot ang unan? Kasi lagi siyang iniiyakan.",
+        "Anong prutas ang mahilig sa cellphone? Cell-papaya.",
+        "Bakit hindi naliligo ang computer? Kasi may “Windows.”",
+        "Anong hayop ang mahilig magbasa? Book-bird.",
+        "Ano ang tawag sa hipon na marunong mag-drive? Shrimp-gear.",
+        "Bakit hindi sumasama sa hide and seek ang ilaw? Kasi lagi siyang “on.”",
+        "Ano ang tawag sa kalendaryo na singer? Date-vid.",
+        "Anong hayop ang mahilig sa internet? Mouse.",
+        "Anong prutas ang mahilig sa mall? Sho-pineapple.",
+        "Anong isda ang mahilig sa drawing? Sketch-fish.",
+        "Bakit hindi nalulunod ang lapis? Kasi may eraser (air-racer).",
+        "Anong gulay ang mahilig magbasketball? Kalabasa-ketball.",
+        "Ano ang tawag sa uod na may suot na jacket? Cool-uod.",
+        "Anong hayop ang mahilig sa cellphone load? Teks-tik.",
+        "Bakit mahilig sa picture ang camera? Kasi “shutter-bug.”",
+        "Ano ang tawag sa ilaw na mayabang? Flashy.",
+        "Anong hayop ang mahilig mag-swimming? Seal na seal.",
+        "Ano ang tawag sa cellphone na mahilig sa kanta? Sing-phone.",
+        "Bakit hindi nagugutom ang relo? Kasi laging may “second.”",
+        "Anong prutas ang mahilig sa pera? Cash-ew.",
+        "Anong hayop ang mahilig magbasketball? Shoot-dog.",
+        "Ano ang tawag sa lapis na magaling kumanta? Sharp-tone.",
+        "Bakit hindi umiiyak ang eraser? Kasi kaya niyang burahin ang lungkot.",
+        "Ano ang tawag sa puno na mahilig sa cellphone? Tree-texter.",
+        "Anong gulay ang mahilig sa joke? Corn-y.",
+        "Anong hayop ang mahilig sa party? Hip-hop-potamus.",
+        "Ano ang tawag sa tubig na mahilig magbasa? Edi “liquid-ary.”",
+        "Anong isda ang mahilig sa science? Lab-lab fish.",
+        "Bakit hindi nawawala ang panyo? Kasi lagi siyang “handy.”",
+        "Anong prutas ang mahilig sa school? Ba-na-na.",
+        "Ano ang tawag sa patatas na artista? Camote-dor.",
+        "Anong hayop ang mahilig sa jokes? Laughing hyena.",
+        "Anong gulay ang mahilig sa cellphone? Talo-phone.",
+        "Bakit hindi nagagalit ang hangin? Kasi chill lang siya.",
+        "Ano ang tawag sa sipon na mahilig mag-drama? Soap-opera.",
+        "Anong prutas ang mahilig maglakad? Walk-melon.",
+        "Ano ang tawag sa aso na mahilig mag-text? Dog-texter.",
+        "Bakit hindi lumalabas ang susi? Kasi naka-lock siya.",
+        "Ano ang tawag sa notebook na mahilig kumanta? Note-tone.",
+        "Anong hayop ang mahilig mag-bike? Cyclo-ps.",
+        "Ano ang tawag sa kape na mahilig sa kwento? Kape-storya.",
+        "Bakit hindi malungkot ang ilaw? Kasi lagi siyang “bright.”",
+        "Anong gulay ang mahilig maglakbay? Travel-luya."
+    ];
+
+    function getNewJoke() {
+        const randomIndex = Math.floor(Math.random() * jokes.length);
+        document.getElementById('jokeDisplay').textContent = jokes[randomIndex];
+    }
+</script>
+
+</body>
+</html>
